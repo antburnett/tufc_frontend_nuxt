@@ -1,3 +1,14 @@
+import axios from 'axios'
+const dynamicRoutes = () => {
+  return axios
+    .get(
+      'https://api.turramurraunited.com.au//wp-json/wp/v2/posts?page=1&per_page=20'
+    )
+    .then((res) => {
+      return res.data.map((post) => `/news/${post.slug}`)
+    })
+}
+
 export default {
   mode: 'universal',
   /*
@@ -47,5 +58,8 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  generate: {
+    routes: dynamicRoutes
   }
 }
